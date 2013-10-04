@@ -1,0 +1,49 @@
+#wme_webinar_details_meta_box {
+	overflow: auto;
+	padding-bottom:10px;
+}
+
+#wme_webinar-meta {
+  width: 100%;
+  color: #555;
+}
+
+fieldset {
+	border:1px solid rgba(0,0,0,0.1);
+	padding:1%;
+	margin-bottom:10px;
+}
+
+fieldset legend, #wme_webinar-meta .field-label {
+  font-weight: bold;
+}
+
+#wme_webinar-meta .flavor-text {
+	color: #808080;
+	font-style:italic;
+	margin-bottom:10px;
+}
+
+#wme_webinar-meta .top-margin {
+  margin-top:20px;
+}
+
+#wme_webinar-meta .inline-section {
+	float:left;
+	margin-right:10px;
+}
+
+#wme_webinar-meta .field-label a {
+	font-weight:normal;
+	font-style:italic;
+}
+
+#wme_webinar-meta #time-change-notify {
+	padding: 10px;
+	margin-bottom:10px;
+	border-radius: 5px;
+  border: 1px solid red;
+  background: rgba(255, 0, 0, 0.2);
+  color: red;
+  display:none;	
+}
