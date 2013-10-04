@@ -9,13 +9,30 @@ Author URI: http://timwoodbury.com/?utm_source=wme-plugin&utm_medium=referral
 License: GPLv2
 */
 
+namespace B0334315817D4E03A27BEED307E417C8;
+
+require(dirname(__FILE__).'/custom-post-type.php');
 require(dirname(__FILE__).'/wme-plugin-helpers.php');
 
-class WebinarsMadeEasyPlugin {
+class WebinarsMadeEasyPlugin extends CustomPostType {
   const TYPE_SLUG = 'wme_webinar';
  
   function __construct() {
-    add_action('init', array($this, 'create_webinar_type'));
+    // call required CustomPostType initializers
+    parent::__construct();
+    $this->init( self::TYPE_SLUG,
+                 array( 'single_name' => 'Webinar',
+                        'plural_name' => 'Webinars',
+                        'public' => true,
+                        'menu_position' => 20,
+                        'supports' =>
+                          array('title'),
+                        'taxonomies' =>
+                          array(''),
+                        'has_archive' => true,
+                        'rewrite' => array('slug' => 'webinars')
+    ));
+    
     add_action('admin_enqueue_scripts', array($this, 'load_admin_scripts'));
     add_action('admin_enqueue_scripts', array($this, 'load_admin_styles'));
     add_action('admin_init', array($this, 'configure_webinar_metaboxes'));
@@ -53,23 +70,6 @@ class WebinarsMadeEasyPlugin {
       ?>
     </ul>
   <?php }
-  
-  /* Initializes the 'Webinar' custom post type */
-  function create_webinar_type($atts) {
-    register_post_type(self::TYPE_SLUG,
-      array(
-        'labels' => $this->get_labels(__('Webinars'), __('Webinar')),
-        'public' => true,
-        'menu_position' => 20,
-        'supports' =>
-          array('title'),
-        'taxonomies' =>
-          array(''),
-        'has_archive' => true,
-        'rewrite' => array('slug' => 'webinars')
-      )
-    );
-  }
   
   /* Creates the css necessary to display the proper icons in the webinar admin area */
   function register_admin_icons() {
@@ -179,7 +179,7 @@ class WebinarsMadeEasyPlugin {
             <div><div id="end-changed"><input type="text" size="6" id="wme-webinar-end" name="webinarend" value="<?php WME_OutputHelper::echo_if_set($webinar_end); ?>"></input></div></div>
           </div>
           <div class="inline-section">
-            <div class="field-label">Timezone <a href="http://www.timeanddate.com/worldclock/" rel="nofollow" target="_timezone">(find your timezone)</a></div>
+            <div class="field-label">Timezone <a href="http://www.timeanddate.com/worldclock/" rel="nofollow" target="_timez">(find your timezone)</a></div>
             <div><input type="text" size="9" id="wme-webinar-timezone" name="webinartimezone" value="<?php WME_OutputHelper::echo_if_set($webinar_timezone); ?>"></input></div>
           </div>
         </div>
@@ -205,25 +205,6 @@ class WebinarsMadeEasyPlugin {
       </fieldset>
     </div>
   <?php }
-  
- /* TODO: Refactor into CustomPostTypeHelper */
-  function get_labels($plural, $singular){
-    return array(
-      'name' => $plural,
-      'singular_name' => $singular,
-      'add_new' => 'Add New',
-      'add_new_item' => 'Add New '.$singular,
-      'edit' => 'Edit',
-      'edit_item' => 'Edit '.$singular,
-      'new_item' => 'New '.$singular,
-      'view' => 'View',
-      'view_item' => 'View '.$singular,
-      'search_items' => 'Search '.$plural,
-      'not_found' => 'No '.$plural.' Found',
-      'not_found_in_trash' => 'No '.$plural.' Found in Trash',
-      'parent' => 'Parent '.$singular
-    );
-  }
   
 } /* End class WebinarsMadeEasyPlugin */
 
