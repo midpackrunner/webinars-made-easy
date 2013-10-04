@@ -47,7 +47,7 @@ if (!class_exists('B0334315817D4E03A27BEED307E417C8\CustomPostType'))
      *
      * Returns: The value of the post_type property
      */
-    protected function get_post_type() {
+    public function get_post_type() {
       return $this->post_type;
     }
     
