@@ -11,7 +11,7 @@ License: GPLv2
 
 namespace B0334315817D4E03A27BEED307E417C8;
 
-require(dirname(__FILE__).'/custom-post-type.php');
+require(dirname(__FILE__).'/com.timwoodbury.core/custom-post-type.php');
 require(dirname(__FILE__).'/wme-plugin-helpers.php');
 
 class WebinarsMadeEasyPlugin extends CustomPostType {

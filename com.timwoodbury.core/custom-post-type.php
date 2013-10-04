@@ -3,7 +3,7 @@
 // All files must be included in this "vendor" specific namespace
 namespace B0334315817D4E03A27BEED307E417C8;
 
-require (dirname(__FILE__).'/array.php');
+require (dirname(__FILE__).'/array-helper.php');
 
 // Check class definition so that multiple plugins can use this class.
 // ----
