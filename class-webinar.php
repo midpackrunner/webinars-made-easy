@@ -14,6 +14,8 @@ class Webinar extends Core\Custom_Post_Type {
 	const KEYS_END_TIME   = 'wme_end_time';
 	const KEYS_TIME_ZONE  = 'wme_time_zone';
 	const KEYS_DIFFICULTY = 'wme_difficulty';
+	const KEYS_COPY_ABOVE_OPTIN = 'wme_copy_above_optin';
+	const KEYS_OPTIN_FORM = 'wme_optin_form';
 
 	/**
 	 * The webinar id.
@@ -69,7 +71,10 @@ class Webinar extends Core\Custom_Post_Type {
 	 * @var int $difficulty The webinar's difficulty.
 	 */
 	private $difficulty = 0;
-	  
+
+	private $copy_above_optin = '';
+	private $optin_form = '';
+
   /**
    * Initializes the webinar custom post type.
 	 *
@@ -120,6 +125,8 @@ class Webinar extends Core\Custom_Post_Type {
 			$this->end_time   = get_post_meta( $this->id, self::KEYS_END_TIME, true );
 			$this->time_zone  = get_post_meta( $this->id, self::KEYS_TIME_ZONE, true );
 			$this->difficulty = get_post_meta( $this->id, self::KEYS_DIFFICULTY, true );
+			$this->copy_above_optin = get_post_meta( $this->id, self::KEYS_COPY_ABOVE_OPTIN, true );
+			$this->optin_form = get_post_meta( $this->id, self::KEYS_OPTIN_FORM, true );
 
 			$loaded = true;
 		}
@@ -153,6 +160,21 @@ class Webinar extends Core\Custom_Post_Type {
 	 * @return string The date of the webinar.
 	 */
 	public function get_date() { return $this->date; }
+	
+	/**
+	 * Displays or returns the date of the webinar.
+	 *
+	 * @since 1.0
+	 * @param Boolean $echo Optional. Display the webinar date (true : default), or return it for use in PHP (false).
+	 */
+	public function the_date( $echo = true ) 
+	{
+		if ( $echo ) {
+			echo esc_html( $this->date );
+		} else {
+			return $this->date;
+		} 
+	}
 
 	/**
 	 * Mutator for the webinar date.
@@ -173,6 +195,21 @@ class Webinar extends Core\Custom_Post_Type {
 	 * @return string The time the webinar starts, in the format 'hh:mm TT'.
 	 */
 	public function get_start_time() { return $this->start_time; }
+	
+	/**
+	 * Displays or returns the start time of the webinar.
+	 *
+	 * @since 1.0
+	 * @param Boolean $echo Optional. Display the webinar start time (true : default), or return it for use in PHP (false).
+	 */
+	public function the_start_time( $echo = true ) 
+	{
+		if ( $echo ) {
+			echo esc_html( $this->start_time );
+		} else {
+			return $this->start_time;
+		} 
+	}
 
 	/**
  	 * Mutator for the webinar's start time.
@@ -195,6 +232,21 @@ class Webinar extends Core\Custom_Post_Type {
 	public function get_end_time() { return $this->end_time; }
 
 	/**
+	 * Displays or returns the end time of the webinar.
+	 *
+	 * @since 1.0
+	 * @param Boolean $echo Optional. Display the webinar end time (true : default), or return it for use in PHP (false).
+	 */
+	public function the_end_time( $echo = true ) 
+	{
+		if ( $echo ) {
+			echo esc_html( $this->end_time );
+		} else {
+			return $this->end_time;
+		} 
+	}
+
+	/**
  	 * Mutator for the webinar's end time.
 	 *
 	 * @since 1.0
@@ -214,6 +266,21 @@ class Webinar extends Core\Custom_Post_Type {
 	 */
 	public function get_time_zone() { return $this->time_zone; }
 
+	/**
+	 * Displays or returns the time zone of the webinar.
+	 *
+	 * @since 1.0
+	 * @param Boolean $echo Optional. Display the webinar time zone (true : default), or return it for use in PHP (false).
+	 */
+	public function the_time_zone( $echo = true ) 
+	{
+		if ( $echo ) {
+			echo esc_html( $this->time_zone );
+		} else {
+			return $this->time_zone;
+		} 
+	}
+	
 	/**
  	 * Mutator for the webinar's time zone.
 	 *
@@ -245,6 +312,34 @@ class Webinar extends Core\Custom_Post_Type {
 			$this->difficulty = intval( $new_difficulty );
 		}
 	}
+	
+	public function get_copy_above_optin() { return $this->copy_above_optin; }
+	public function the_copy_above_optin( $echo = true ) {
+		if( $echo ) {
+			echo $this->copy_above_optin;
+		} else {
+			return $this->copy_above_optin;
+		}
+	}
+	public function set_copy_above_optin( $new_copy ) {
+		if ( isset( $new_copy ) ) {
+			$this->copy_above_optin = $new_copy;
+		}
+	}
+	
+	public function get_optin_form() { return $this->optin_form; }
+	public function the_optin_form( $echo = true ) {
+		if ( $echo ) {
+			echo $this->optin_form;
+		} else {
+			return $this->optin_form;
+		}
+	}
+	public function set_optin_form( $new_form ) {
+		if ( isset( $new_form ) ) {
+			$this->optin_form = $new_form;
+		}
+	}
 
 	/**
 	 * Save the webinar.
@@ -259,6 +354,8 @@ class Webinar extends Core\Custom_Post_Type {
 				update_post_meta( $this->id, self::KEYS_END_TIME,   $this->end_time );
 				update_post_meta( $this->id, self::KEYS_TIME_ZONE,  $this->time_zone );
 				update_post_meta( $this->id, self::KEYS_DIFFICULTY, $this->difficulty );
+				update_post_meta( $this->id, self::KEYS_COPY_ABOVE_OPTIN, $this->copy_above_optin );
+				update_post_meta( $this->id, self::KEYS_OPTIN_FORM, $this->optin_form );
 			}
 		}
 	}

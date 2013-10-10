@@ -82,12 +82,15 @@ class Admin {
 	function on_save_post( $webinar_id, $webinar ) {
 		if ( $this->webinar->get_post_type() === $webinar->post_type ) {
 			$this->webinar->set_id( $webinar_id );
-			$this->webinar->set_date( $_POST['webinardate'] );
-			$this->webinar->set_start_time( $_POST['webinarstart'] );
-			$this->webinar->set_end_time( $_POST['webinarend'] );
-			$this->webinar->set_time_zone( $_POST['webinartimezone'] );
-			$this->webinar->set_difficulty( $_POST['webinardifficulty'] );
-
+			
+			$webinar_data = $_POST['webinars-made-easy'];
+			$this->webinar->set_date( $webinar_data['date'] );
+			$this->webinar->set_start_time( $webinar_data['start-time'] );
+			$this->webinar->set_end_time( $webinar_data['end-time'] );
+			$this->webinar->set_time_zone( $webinar_data['time-zone'] );
+			$this->webinar->set_difficulty( $webinar_data['difficulty'] );
+			$this->webinar->set_copy_above_optin( $webinar_data['copy-above-optin'] );
+			$this->webinar->set_optin_form( $webinar_data['optin-form-code'] );
 			$this->webinar->save();
 		}
 	}
@@ -114,21 +117,21 @@ class Admin {
 				<legend>Scheduling</legend>
 				<div>
 					<div class="field-label">Date</div>
-					<div><input type="text" size="30" id="wme-webinar-date" name="webinardate" value="<?php echo esc_html( $this->webinar->get_date() ); ?>"></input></div>
+					<div><input type="text" size="30" id="wme-webinar-date" name="webinars-made-easy[date]" value="<?php $this->webinar->the_date(); ?>"></input></div>
 				</div>
 				<div class="top-margin">
 					<div id="time-change-notify">Your start time has been automatically adjusted. Please verify before saving this webinar.</div>
 					<div class="inline-section">
 						<div class="field-label">From</div>
-						<div><div id="start-changed"><input type="text" size="6" id="wme-webinar-start" name="webinarstart" value="<?php echo esc_html( $this->webinar->get_start_time() ); ?>"></input></div></div>
+						<div><div id="start-changed"><input type="text" size="6" id="wme-webinar-start" name="webinars-made-easy[start-time]" value="<?php $this->webinar->the_start_time(); ?>"></input></div></div>
 					</div>
 					<div class="inline-section">
 						<div class="field-label">To</div>
-						<div><div id="end-changed"><input type="text" size="6" id="wme-webinar-end" name="webinarend" value="<?php echo esc_html( $this->webinar->get_end_time() ); ?>"></input></div></div>
+						<div><div id="end-changed"><input type="text" size="6" id="wme-webinar-end" name="webinars-made-easy[end-time]" value="<?php $this->webinar->the_end_time(); ?>"></input></div></div>
 					</div>
 					<div class="inline-section">
 						<div class="field-label">Timezone <a href="http://www.timeanddate.com/worldclock/" rel="nofollow" target="_timez">(find your timezone)</a></div>
-						<div><input type="text" size="9" id="wme-webinar-timezone" name="webinartimezone" value="<?php echo esc_html( $this->webinar->get_time_zone() ); ?>"></input></div>
+						<div><input type="text" size="9" id="wme-webinar-timezone" name="webinars-made-easy[time-zone]" value="<?php $this->webinar->the_time_zone(); ?>"></input></div>
 					</div>
 				</div>
 			</fieldset>
@@ -139,7 +142,7 @@ class Admin {
 				<?php 
 					$webinar_difficulty = $this->webinar->get_difficulty();
 					for( $i = 0; $i < 5; ++$i ) : ?>
-					<input type="radio" name="webinardifficulty" class="star required" value="<?php echo $i; ?>" <?php if( $i == $webinar_difficulty ) { echo 'checked="checked"'; } ?>></input>
+					<input type="radio" name="webinars-made-easy[difficulty]" class="star required" value="<?php echo $i; ?>" <?php if( $i == $webinar_difficulty ) { echo 'checked="checked"'; } ?>></input>
 				<?php endfor; ?>
 				</div>
 			</fieldset>
@@ -150,7 +153,12 @@ class Admin {
 						<div class="field-label">Webinar Description</div>
 						<div class="flavor-text">The webinar description will appear at the top of your page, above the signup form. This is your opportunity to explain to your audience what they can expect to learn from your webinar &mdash; how it will help them. This is also your opportunity to overcome any of their objections. Why should I, as an audience member, choose to attend this webinar over any other thing on which I may spend my time?</div>
 					</div>
-					<div><?php wp_editor( $webinar->post_content, 'webinardesc' ) ?></div>
+					<div><?php wp_editor( $this->webinar->get_copy_above_optin(), 'webinars-made-easy[copy-above-optin]' ); ?></div>
+					<div class="top-margin">
+						<div class="field-label">Registration Form Code</div>
+						<div class="flavor-text">Paste the code you received from your mailing list provider (such as Aweber, MailChimp, or Constant Contact) into the box below. Your registration form will be displayed alongside your webinar&#39;s details.</div>
+					</div>
+					<div><textarea rows="6" class="large" name="webinars-made-easy[optin-form-code]" id="wme-optin-form-code"><?php $this->webinar->the_optin_form(); ?></textarea></div>
 				</div>
 			</fieldset>
 		</div>

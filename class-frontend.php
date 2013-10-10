@@ -7,7 +7,25 @@ class Frontend {
 
 	public function __construct( $webinar_instance ) {
 		$this->webinar = $webinar_instance;
+		add_filter( 'template_include', array( $this, 'on_template_include' ) );
 		add_shortcode( 'webinars', array( $this, 'list_webinars' ) );
+	}
+
+	/**
+	 */
+	public function on_template_include( $template_path ) {
+		$type_slug = $this->webinar->get_post_type();
+		if ( $type_slug == get_post_type() ) {
+			if ( is_single() ) {
+				$webinar_template = 'single-' . $type_slug . '.php';
+				if ( $theme_file = locate_template( array( $webinar_template ) ) ) {
+					$template_path = $theme_file;
+				} else {
+					$template_path = plugin_dir_path( __FILE__ ) . '/templates/' . $webinar_template;
+				}
+			}
+		}
+		return $template_path;
 	}
 
 	/**
@@ -34,4 +52,5 @@ class Frontend {
 			echo '<li>No Webinars</li>'; ?>
     </ul>
   <?php endif;
+	}
 }

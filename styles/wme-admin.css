@@ -14,8 +14,13 @@ fieldset {
 	margin-bottom:10px;
 }
 
-fieldset legend, #wme_webinar-meta .field-label {
+fieldset legend,
+#wme_webinar-meta .field-label {
   font-weight: bold;
+}
+
+textarea.large {
+	width:100%;
 }
 
 #wme_webinar-meta .flavor-text {
