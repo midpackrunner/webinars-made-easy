@@ -1,13 +1,14 @@
 <?php
 
-namespace B0334315817D4E03A27BEED307E417C8;
+namespace B0334315817D4E03A27BEED307E417C8\Webinars_Made_Easy;
+use B0334315817D4E03A27BEED307E417C8 as Core;
 
 /**
  * The base class for a WordPress custom post type.
  */
 require_once( dirname( __FILE__ ) . '/com.timwoodbury.core/class-custom-post-type.php');
 
-class Webinar extends Custom_Post_Type {
+class Webinar extends Core\Custom_Post_Type {
 	const KEYS_DATE       = 'wme_date';
 	const KEYS_START_TIME = 'wme_start_time';
 	const KEYS_END_TIME   = 'wme_end_time';

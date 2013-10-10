@@ -9,7 +9,7 @@ Author URI: http://timwoodbury.com/?utm_source=wme-plugin&utm_medium=referral
 License: GPLv2
 */
 
-namespace B0334315817D4E03A27BEED307E417C8;
+namespace B0334315817D4E03A27BEED307E417C8\Webinars_Made_Easy;
 
 /**
  * The Webinar custom type/model.
@@ -22,12 +22,12 @@ if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) ) {
 	/**
 	 * The admin area functionality for the Webinars Made Easy plugin.
 	 */
-  require_once( dirname( __FILE__ ) . '/admin.php' );
-  $webinars_made_easy_plugin = new Webinars_Made_Easy_Plugin_Admin( $webinar );
+  require_once( dirname( __FILE__ ) . '/class-admin.php' );
+  $plugin = new Admin( $webinar );
 } else {
 	/**
 	 * The client facing functionality for the Webinars Made Easy plugin.
 	 */
-  require_once( dirname( __FILE__ ) . '/frontend.php' );
-  $webinars_made_easy_plugin = new Webinars_Made_Easy_Plugin_Frontend( $webinar );
+  require_once( dirname( __FILE__ ) . '/class-frontend.php' );
+  $plugin = new Frontend( $webinar );
 }

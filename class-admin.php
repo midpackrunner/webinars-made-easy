@@ -1,8 +1,8 @@
 <?php
 
-namespace B0334315817D4E03A27BEED307E417C8;
+namespace B0334315817D4E03A27BEED307E417C8\Webinars_Made_Easy;
 
-class Webinars_Made_Easy_Plugin_Admin {
+class Admin {
   private $webinar;
   
   /*
